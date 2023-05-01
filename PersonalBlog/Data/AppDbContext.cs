@@ -4,9 +4,13 @@ using Microsoft.Extensions.Configuration;
 using MySql.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using PersonalBlog.Models;
+using System.Numerics;
+
 namespace PersonalBlog.Data
 {
-	public class AppDbContext: DbContext
+	public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
         private readonly IConfiguration _configuration;
 
@@ -22,6 +26,14 @@ namespace PersonalBlog.Data
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseMySQL(connectionString);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
     }
 }

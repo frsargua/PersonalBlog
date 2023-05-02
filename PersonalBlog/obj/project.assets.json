@@ -2667,6 +2667,7 @@
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.5",
       "Microsoft.EntityFrameworkCore >= 7.0.5",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.5",
+      "Microsoft.Extensions.Options >= 7.0.1",
       "MySql.EntityFrameworkCore >= 7.0.2"
     ]
   },
@@ -2721,6 +2722,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[7.0.5, )"
+          },
+          "Microsoft.Extensions.Options": {
+            "target": "Package",
+            "version": "[7.0.1, )"
           },
           "MySql.EntityFrameworkCore": {
             "target": "Package",

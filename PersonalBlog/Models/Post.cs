@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
+using PersonalBlog.Data.Base;
 
 namespace PersonalBlog.Models
 {
-	public class Post
-	{
+	public class Post: IEntityBase
+    {
             [Key]
             public int Id { get; set; }
 
@@ -25,10 +27,9 @@ namespace PersonalBlog.Models
             //Relationships
 
             //PostOwner
-            [Display(Name = "Comment Owner")]
-            [Required(ErrorMessage = "Comment must have an owner")]
-            public int ApplicationUserId { get; set; }
-            public ApplicationUser CommentOwner { get; set; }
+            public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
             
     }

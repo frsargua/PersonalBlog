@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using PersonalBlog.Data;
+using PersonalBlog.Data.Services;
 using PersonalBlog.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>();
-
+builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

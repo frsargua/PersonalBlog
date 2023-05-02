@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using PersonalBlog.Data.Services;
 using PersonalBlog.Models;
 
 namespace PersonalBlog.Controllers;
@@ -8,14 +9,18 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    private readonly IPostService _post;
+
+    public HomeController(ILogger<HomeController> logger, IPostService postService)
     {
         _logger = logger;
+        _post = postService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var allPosts= await _post.GetAll(n => n.ApplicationUser);
+        return View(allPosts);
     }
 
     public IActionResult Privacy()

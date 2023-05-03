@@ -14,7 +14,6 @@ namespace PersonalBlog.Data
     {
         private readonly IConfiguration _configuration;
 
-
         public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration):base(options)
         {
             _configuration = configuration;

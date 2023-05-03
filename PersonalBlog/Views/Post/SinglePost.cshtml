@@ -1,0 +1,57 @@
+﻿@using PersonalBlog.Data.ViewModels;
+@model Post ;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="col-11 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center my-3">
+<div class="d-flex">
+    <h5>@Model.ApplicationUser on the @Model.DateCreated</h5
+    <div class="dropdown">
+        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            <i class="bi bi-person-badge"></i> Options
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="profile-btn">
+            <li>
+
+                <form asp-action="Delete">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="Id" hidden />
+                    <div class="form-group">
+                        <input type="submit" value="Delete" class="btn btn-outline-success float-right" />
+                    </div>
+                </form>
+
+                @*<a class="dropdown-item" asp-action="Delete" asp-route-id="@Model.Id">
+                    <i class="bi bi-list"></i> Delete
+                </a>*@
+
+                <a class="dropdown-item" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id">
+                    <i class="bi bi-list"></i> Edit
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+    <div class="card col-12">
+        <div class="card-body bg-success bg-opacity-25">
+            @Model.PostTitle
+        </div>
+        <div class="card-body">@Model.PostText</div>
+
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Comment" asp-action="Create" class="card col-8 mx-auto p-2 bg-warning bg-opacity-50">
+        <textarea id="" cols="30" rows="3" name="comment_text" required></textarea>
+        <button class="col-3 ms-auto mt-1 btn btn-warning" type="submit">Post</button>
+    </form>
+}

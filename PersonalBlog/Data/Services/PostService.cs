@@ -24,7 +24,7 @@ namespace PersonalBlog.Data.Services
             var newMovie = new Post()
             {
                 ApplicationUserId = owner,
-                DateCreated = DateTime.Now.ToString("dd/MM/yyyy"),
+                DateCreated = DateTime.Now,
                 PostTitle = data.PostTitle,
                 PostText = data.PostText
             };
@@ -33,6 +33,16 @@ namespace PersonalBlog.Data.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Post>> GetAllByIdAsync(int id)
+        {
+            //var result = await _context.Posts.Where(n=>n.Id==id);
+
+                        
+
+            var result =  _context.Posts.Where(n => n.ApplicationUserId == id.ToString());
+
+            return result;
+        }
 
 
     }

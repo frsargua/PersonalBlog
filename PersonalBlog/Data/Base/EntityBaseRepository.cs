@@ -50,6 +50,7 @@ namespace PersonalBlog.Data.Base
             return result;
         }
 
+
         public async Task UpdateAsync(int id, T newEntity)
         {
             EntityEntry entityEntry = _context.Entry<T>(newEntity);

@@ -24,6 +24,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,7 +41,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

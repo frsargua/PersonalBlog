@@ -10,7 +10,7 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="profile-btn">
             <li>
-                <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
+                <a class="dropdown-item" asp-controller="Account" asp-action="Dashboard" asp-route-id="@UserManager.GetUserId(User)">
                     <i class="bi bi-list"></i> Dashboard
                 </a>
             </li>

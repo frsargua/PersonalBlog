@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Data;
+using PersonalBlog.Data.Services;
 using PersonalBlog.Data.ViewModels;
 using PersonalBlog.Models;
 
@@ -15,17 +16,20 @@ namespace PersonalBlog.Controllers
         //Used to work with the user related data.
         private readonly UserManager<ApplicationUser> _userManager;
 
+        private readonly IPostService _service;
+
         //Used to check if the user is signed in.
         private readonly SignInManager<ApplicationUser> _signInManager;
 
 
         private readonly AppDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, IPostService service)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _service = service;
         }
 
         // GET: /<controller
@@ -34,6 +38,14 @@ namespace PersonalBlog.Controllers
             var response = new LoginVM();
 
             return View(response);
+        }
+
+
+        // GET: /<controller
+        public async Task<IActionResult> Dashboard(int id)
+        {
+            var posts = await _service.GetAllByIdAsync(id);
+            return View(posts);
         }
 
         [HttpPost]

@@ -14,7 +14,7 @@ namespace PersonalBlog.Models
             [Display(Name = "Date Created")]
             [Required(ErrorMessage = "Date created is required")]
             [DataType(DataType.Date)]   
-            public string DateCreated { get; set; }
+            public DateTime DateCreated { get; set; }
 
             [Display(Name = "Post Title")]
             [Required(ErrorMessage = "Post title is required")]
@@ -27,9 +27,9 @@ namespace PersonalBlog.Models
             //Relationships
 
             //PostOwner
+        //[ForeignKey("ApplicationUserId")]
             public string ApplicationUserId { get; set; }
-        [ForeignKey("ApplicationUserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
 
             
     }

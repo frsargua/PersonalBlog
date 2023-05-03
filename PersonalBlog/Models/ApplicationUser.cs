@@ -7,13 +7,13 @@ namespace PersonalBlog.Models
 	public class ApplicationUser: IdentityUser
     {
 
-            [Display(Name = "full name")]
+        [Display(Name = "full name")]
             public string FullName { get; set; }
 
 
             // Navigation Property
 
-            public virtual ICollection<Post>? Posts { get; set; }
+            public ICollection<Post>? Posts { get; set; }
 
     }
 }

@@ -28,6 +28,12 @@ namespace PersonalBlog.Controllers
             return View();
         }
 
+        // GET: /<controller>/
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         //POST: /<controller>/
         [HttpPost]
         public async Task<IActionResult> Create(NewPostVM post)
@@ -37,7 +43,7 @@ namespace PersonalBlog.Controllers
                 return View();
             }
 
-            await _service.AddNewPostAsync(post, ClaimTypes.NameIdentifier);
+            await _service.AddNewPostAsync(post, "3835fce2-5457-4e79-a983-39c20dd901dc");
             return RedirectToAction(nameof(Index));
         }
     }

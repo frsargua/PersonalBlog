@@ -15,6 +15,7 @@
     <None Remove="Data\Static\" />
     <None Remove="Data\Services\" />
     <None Remove="Data\Base\" />
+    <None Remove="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -23,6 +24,7 @@
     <Folder Include="Data\Static\" />
     <Folder Include="Data\Services\" />
     <Folder Include="Data\Base\" />
+    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />

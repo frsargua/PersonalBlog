@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PersonalBlog.Data.Base;
 using PersonalBlog.Data.ViewModels;
@@ -10,27 +11,27 @@ namespace PersonalBlog.Data.Services
 {
     public class PostService : EntityBaseRepository<Post>, IPostService
     {
-
         private readonly AppDbContext _context;
 
-        public PostService(AppDbContext context) : base(context){
+        public PostService(AppDbContext context) : base(context)
+        {
             _context = context;
-
         }
 
-        public async Task AddNewPostAsync(NewPostVM data, string owner)
+        public async Task AddNewPostAsync(Post data)
         {
-            //create object
-            var newMovie = new Post()
-            {
-                ApplicationUserId = owner,
-                DateCreated = DateTime.Now,
-                PostTitle = data.PostTitle,
-                PostText = data.PostText
-            };
 
-            await _context.Posts.AddAsync(newMovie);
-            await _context.SaveChangesAsync();
+
+            if (_context != null)
+            {
+                await _context.Posts.AddAsync(data);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new NullReferenceException("_context object is null");
+            }
+
         }
 
         public async Task<IEnumerable<Post>> GetAllByIdAsync(int id)
@@ -39,11 +40,24 @@ namespace PersonalBlog.Data.Services
 
                         
 
-            var result =  _context.Posts.Where(n => n.ApplicationUserId == id.ToString());
+            var result =  _context.Posts.Where(n => n.AppUserId == id.ToString());
 
             return result;
         }
 
+        public async Task<IEnumerable<Post>> GetAllByUserId(string userId)
+        {
+            var result = _context.Posts.Where(n => n.AppUserId == userId).Include(n=>n.AppUser).ToList();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Post>> GetAllByCategory(int categoryId)
+        {
+            var result = _context.Posts.Where(n => (int)n.PostCategory == categoryId).Include(n => n.AppUser).ToList();
+
+            return result;
+        }
 
     }
 }

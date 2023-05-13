@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Routing;
 using PersonalBlog.Data.Services;
 using PersonalBlog.Data.ViewModels;
 using PersonalBlog.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,10 +21,10 @@ namespace PersonalBlog.Controllers
     {
 
         private readonly IPostService _service;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
 
-        public PostController(UserManager<ApplicationUser> userManager, IPostService service)
+        public PostController(UserManager<AppUser> userManager, IPostService service)
         {
             _service = service;
             _userManager = userManager;
@@ -44,9 +45,25 @@ namespace PersonalBlog.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> SinglePost(int id)
         {
-            var singlePost = await _service.GetByIdAsync(id);
+            var singlePost = await _service.GetByIdAsync(id, o => o.Comment);
 
-            return View(singlePost);
+            var combinedViewModel = new SinglePostLoggedIn
+            {
+                post = singlePost,
+            };
+
+            ViewBag.UserId = _userManager.GetUserId(User);
+
+
+            return View(combinedViewModel);
+        }
+
+        // GET: /<controller>/
+        public async Task<IActionResult> PostsByCategory(int id)
+        {
+            var allPosts = await _service.GetAllByCategory(id);
+
+            return View(allPosts);
         }
 
         // GET: /<controller>/
@@ -67,8 +84,28 @@ namespace PersonalBlog.Controllers
             }
 
             var userId = _userManager.GetUserId(User);
-            await _service.AddNewPostAsync(post, userId);
-            return RedirectToAction(nameof(Index));
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (_userManager == null)
+            {
+                throw new Exception("_userManager is null");
+            }
+
+            if (User == null)
+            {
+                throw new Exception("User is null");
+            }
+
+            var newPost = new Post();
+
+            newPost.AppUserId = userId;
+            newPost.DateCreated = DateTime.Now;
+            newPost.PostTitle = post.PostTitle;
+            newPost.PostText = post.PostText;
+            newPost.PostCategory = post.PostCategory;
+
+            await _service.AddNewPostAsync(newPost);
+            return RedirectToAction("Index","Home");
         }
 
         //POST: /<controller>/
@@ -81,7 +118,7 @@ namespace PersonalBlog.Controllers
             }
 
             await _service.UpdateAsync(  post.Id ,post);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("SinglePost","Post", new { id = post.Id });
         }
 
         //POST: /<controller>/

@@ -1,57 +1,76 @@
 ﻿@using PersonalBlog.Data.ViewModels;
-@model Post ;
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+@using System.Security.Claims
+@model SinglePostLoggedIn;
 
 <div class="col-11 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center my-3">
-<div class="d-flex">
-    <h5>@Model.ApplicationUser on the @Model.DateCreated</h5
-    <div class="dropdown">
-        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
-                aria-expanded="false">
-            <i class="bi bi-person-badge"></i> Options
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="profile-btn">
-            <li>
+    <div class="d-flex">
+        <h5>
+            @Model.post.AppUser on the @Model.post.DateCreated
+        </h5>
+        @if (User.Identity.IsAuthenticated && Model.post.AppUserId == ViewBag.UserId)
+        {
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <i class="bi bi-person-badge"></i> Options
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                    <li>
 
-                <form asp-action="Delete">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <form asp-controller="Post" asp-action="Delete" asp-route-id="@Model.post.Id">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <input asp-for="Id" hidden />
-                    <div class="form-group">
-                        <input type="submit" value="Delete" class="btn btn-outline-success float-right" />
-                    </div>
-                </form>
+                            <div class="form-group">
+                                <input type="submit" value="Delete" class="btn btn-outline-success float-right" />
+                            </div>
+                        </form>
 
-                @*<a class="dropdown-item" asp-action="Delete" asp-route-id="@Model.Id">
-                    <i class="bi bi-list"></i> Delete
-                </a>*@
+                        <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.post.Id">
+                            <i class="bi bi-list"></i> Edit
+                        </a>
+                    </li>
+                </ul>
 
-                <a class="dropdown-item" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id">
-                    <i class="bi bi-list"></i> Edit
-                </a>
-            </li>
-        </ul>
-
+            </div>
+        }
     </div>
-</div>
 
     <div class="card col-12">
         <div class="card-body bg-success bg-opacity-25">
-            @Model.PostTitle
+            @Model.post.PostTitle
         </div>
-        <div class="card-body">@Model.PostText</div>
+        <div class="card-body">@Model.post.PostText</div>
 
     </div>
+
+
+    @foreach (var comment in Model.post.Comment)
+    {
+        <div class="card col-10">
+            <div class="card-body bg-danger bg-opacity-25">
+                @comment.DateCreated
+            </div>
+            <div class="card-body">@comment.CommentText</div>
+
+        </div>
+    }
+
 </div>
 
 @if (User.Identity.IsAuthenticated)
 {
-    <form asp-controller="Comment" asp-action="Create" class="card col-8 mx-auto p-2 bg-warning bg-opacity-50">
-        <textarea id="" cols="30" rows="3" name="comment_text" required></textarea>
-        <button class="col-3 ms-auto mt-1 btn btn-warning" type="submit">Post</button>
+    <form asp-controller="Comment" asp-action="Create" asp-route-id="@Model.post.Id" class="card col-8 mx-auto p-2 bg-warning bg-opacity-50">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="newCommentVM.PostId" value="@Model.post.Id" hidden />
+
+        <div class="form-group">
+            <label asp-for="newCommentVM.CommentText" class="control-label"></label>
+            <input asp-for="newCommentVM.CommentText" class="form-control" />
+            <span asp-validation-for="newCommentVM.CommentText" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-outline-success float-right" type="submit" value="Create" />
+        </div>
     </form>
 }

@@ -12,6 +12,9 @@ namespace PersonalBlog.Data.ViewModels
         [Display(Name = "Description")]
         [Required(ErrorMessage = "Description is required")]
         public string PostText { get; set; }
+
+        public PostCategory PostCategory { get; set; }
+
     }
 }
 

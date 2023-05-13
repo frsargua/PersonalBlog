@@ -1,0 +1,22 @@
+﻿@*Define model*@
+@model IEnumerable<Post>
+@*Define ViewData*@
+@{
+    ViewData["Title"] = "List of Posts";
+}
+
+@foreach (var item in Model)
+{
+    <div class="col-11 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center my-4">
+        <h5>@item.AppUser.FullName on the @item.DateCreated</h5>
+        <div class="card col-12">
+            <div class="card-body bg-success bg-opacity-25">
+                @item.PostTitle
+            </div>
+            <div class="card-body">@item.PostText</div>
+            <a asp-controller="Post" asp-action="SinglePost" asp-route-id="@item.Id" class="btn btn-success col-2 ms-auto m-1 text-decoration-none text-white">
+                Go To Post
+            </a>
+        </div>
+    </div>
+}

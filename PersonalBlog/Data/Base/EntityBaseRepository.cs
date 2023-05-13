@@ -44,10 +44,22 @@ namespace PersonalBlog.Data.Base
             return await query.ToListAsync();
         }
 
+
+
         public async Task<T> GetByIdAsync(int id)
         {
             var result = await _context.Set<T>().FirstOrDefaultAsync(n => n.Id == id);
             return result;
+        }
+
+        public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includeProperties)
+        {
+            //var result = _context.Set<T>().Where(o => o.Id == id).Include(includeProperties).ToList();
+            //return result;
+
+            var query = _context.Set<T>().Where(o => o.Id == id);
+            query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return await query.FirstOrDefaultAsync();
         }
 
 

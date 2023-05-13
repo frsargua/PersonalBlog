@@ -23,12 +23,12 @@ namespace PersonalBlog.Data
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
                 //Users
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
                 string adminUserEmail = "admin@etickets.com";
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
                 if (adminUser == null)
                 {
-                    var newAdminUser = new ApplicationUser()
+                    var newAdminUser = new AppUser()
                     {
                         FullName = "Admin User",
                         UserName = "admin-user",
@@ -45,7 +45,7 @@ namespace PersonalBlog.Data
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
                 {
-                    var newAppUser = new ApplicationUser()
+                    var newAppUser = new AppUser()
                     {
                         FullName = "Application User",
                         UserName = "app-user",

@@ -19,8 +19,8 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var allPosts= await _post.GetAll(n => n.ApplicationUser);
-        return View(allPosts);
+        return View();
+
     }
 
     public IActionResult Privacy()

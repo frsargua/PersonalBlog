@@ -14,17 +14,17 @@ namespace PersonalBlog.Controllers
     {
 
         //Used to work with the user related data.
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
         private readonly IPostService _service;
 
         //Used to check if the user is signed in.
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
 
         private readonly AppDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, IPostService service)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AppDbContext context, IPostService service)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -42,9 +42,9 @@ namespace PersonalBlog.Controllers
 
 
         // GET: /<controller
-        public async Task<IActionResult> Dashboard(int id)
+        public async Task<IActionResult> Dashboard(string id)
         {
-            var posts = await _service.GetAllByIdAsync(id);
+            var posts = await _service.GetAllByUserId(id);
             return View(posts);
         }
 
@@ -101,7 +101,7 @@ namespace PersonalBlog.Controllers
                 return View(registerVM);
             }
 
-            var newUser = new ApplicationUser()
+            var newUser = new AppUser()
             {
                 FullName = registerVM.FullName,
                 Email = registerVM.EmailAddress,

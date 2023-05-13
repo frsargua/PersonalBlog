@@ -16,6 +16,7 @@
     <None Remove="Data\Services\" />
     <None Remove="Data\Base\" />
     <None Remove="Views\Post\" />
+    <None Remove="Data\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -25,6 +26,7 @@
     <Folder Include="Data\Services\" />
     <Folder Include="Data\Base\" />
     <Folder Include="Views\Post\" />
+    <Folder Include="Data\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
@@ -35,5 +37,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Views\Home\txt">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
   </ItemGroup>
 </Project>

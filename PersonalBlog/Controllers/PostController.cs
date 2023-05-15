@@ -21,12 +21,16 @@ namespace PersonalBlog.Controllers
     {
 
         private readonly IPostService _service;
+
+        private readonly ICommentService _serviceComments;
         private readonly UserManager<AppUser> _userManager;
 
+        private readonly int PageSize = 10;
 
-        public PostController(UserManager<AppUser> userManager, IPostService service)
+        public PostController(UserManager<AppUser> userManager, IPostService service, ICommentService serviceComments)
         {
             _service = service;
+            _serviceComments = serviceComments;
             _userManager = userManager;
         }
 
@@ -43,9 +47,21 @@ namespace PersonalBlog.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> SinglePost(int id)
+        public async Task<IActionResult> SinglePost(int id, int? page)
         {
-            var singlePost = await _service.GetByIdAsync(id, o => o.Comment);
+            int pageNumber = page ?? 1;
+
+            int totalCommentCount = _serviceComments.GetCommentCountForPost(id);
+
+            int totalPages = (int)Math.Ceiling((double)totalCommentCount / PageSize);
+
+            pageNumber = pageNumber < 1 ? 1 : pageNumber;
+            pageNumber = pageNumber > totalPages ? totalPages : pageNumber;
+
+            int skip = (pageNumber - 1) * PageSize;
+
+
+            var singlePost = await _service.GetByIdAsync(id,skip,PageSize, o => o.Comment);
 
             var combinedViewModel = new SinglePostLoggedIn
             {

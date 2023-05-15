@@ -21,6 +21,13 @@ namespace PersonalBlog.Data.Services
             await _context.Comments.AddAsync(newComment);
             await _context.SaveChangesAsync();
         }
+
+
+        public int GetCommentCountForPost(int id)
+        {
+
+            return _context.Comments.Where(n=> n.AppUserId==id.ToString()).Count();
+        }
     }
 }
 

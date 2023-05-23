@@ -1,4 +1,5 @@
 ﻿@using PersonalBlog.Data.ViewModels;
+@using PersonalBlog.Data;
 @inject UserManager<AppUser> UserManager;
 @model NewPostVM ;
 
@@ -20,6 +21,11 @@
                 <label asp-for="PostText" class="control-label"></label>
                 <input asp-for="PostText" class="form-control" />
                 <span asp-validation-for="PostText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostCategory" class="control-label"></label>
+                <select asp-for="PostCategory" class="form-control" asp-items="Html.GetEnumSelectList<PostCategory>()"></select>
+                <span asp-validation-for="PostCategory" class="text-danger"></span>
             </div>
 
             <div class="form-group">

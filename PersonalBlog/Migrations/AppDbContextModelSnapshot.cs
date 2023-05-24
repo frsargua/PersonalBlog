@@ -257,6 +257,10 @@ namespace PersonalBlog.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("PostCategory")
                         .HasColumnType("int");
 

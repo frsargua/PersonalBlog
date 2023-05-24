@@ -7,16 +7,32 @@
 
 @foreach (var item in Model)
 {
-    <div class="col-11 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center my-4">
-        <h5>@item.AppUser.FullName on the @item.DateCreated</h5>
-        <div class="card col-12">
-            <div class="card-body bg-success bg-opacity-25">
-                @item.PostTitle
+    <div class="col-11 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center my-5">
+        <small class="text-muted">@item.AppUser.FullName on the @item.DateCreated</small>
+        <div class="card shadow-lg my-1" style="border-radius:15px;">
+            <div class="card-header bg-primary text-white rounded-top">
+                <h5 class="mb-0">@item.PostTitle</h5>
             </div>
-            <div class="card-body">@item.PostText</div>
-            <a asp-controller="Post" asp-action="SinglePost" asp-route-id="@item.Id" class="btn btn-success col-2 ms-auto m-1 text-decoration-none text-white">
-                Go To Post
-            </a>
+            <div class="card-body bg-light">
+                <p class="mb-4">
+                    @item.PostText
+                </p>
+                <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-outline-primary" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+                        View Image
+                    </a>
+                    <div class="dropdown-menu" style="width:auto" aria-labelledby="dropdownMenuButton">
+                        <img class="shadow-md" src="@item.ImageUrl" style="width:50vw; max-width: 500px; height: auto; object-fit: cover;" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-0 bg-transparent d-flex justify-content-end">
+                <a asp-controller="Post" asp-action="SinglePost" asp-route-id="@item.Id" class="btn btn-primary text-white">
+                    Go To Post
+                </a>
+            </div>
         </div>
     </div>
+
+
 }

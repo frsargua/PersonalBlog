@@ -19,7 +19,7 @@ namespace PersonalBlog.Controllers
 {
     public class PostController : Controller
     {
-
+        private readonly IFirebaseService _firebaseService;
         private readonly IPostService _service;
 
         private readonly ICommentService _serviceComments;
@@ -27,11 +27,12 @@ namespace PersonalBlog.Controllers
 
         private readonly int PageSize = 10;
 
-        public PostController(UserManager<AppUser> userManager, IPostService service, ICommentService serviceComments)
+        public PostController(UserManager<AppUser> userManager, IPostService service, ICommentService serviceComments, IFirebaseService firebaseService)
         {
             _service = service;
             _serviceComments = serviceComments;
             _userManager = userManager;
+            _firebaseService = firebaseService;
         }
 
         // GET: /<controller>/
@@ -119,6 +120,8 @@ namespace PersonalBlog.Controllers
             newPost.PostTitle = post.PostTitle;
             newPost.PostText = post.PostText;
             newPost.PostCategory = post.PostCategory;
+            newPost.ImageUrl = await _firebaseService.UploadImageAsync(post.ImageUrl);
+
 
             await _service.AddNewPostAsync(newPost);
             return RedirectToAction("Index","Home");

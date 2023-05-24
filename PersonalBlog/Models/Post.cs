@@ -24,6 +24,10 @@ namespace PersonalBlog.Models
         [Required(ErrorMessage = "Description is required")]
         public string PostText { get; set; }
 
+        [Display(Name = "ImageUrl")]
+        [Required(ErrorMessage = "Image is required")]
+        public string ImageUrl { get; set; }
+
 
         public PostCategory PostCategory { get; set; }
 

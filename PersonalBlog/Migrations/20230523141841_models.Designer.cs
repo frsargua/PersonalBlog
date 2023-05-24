@@ -11,7 +11,7 @@ using PersonalBlog.Data;
 namespace PersonalBlog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230511152333_models")]
+    [Migration("20230523141841_models")]
     partial class models
     {
         /// <inheritdoc />
@@ -259,6 +259,10 @@ namespace PersonalBlog.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("PostCategory")
                         .HasColumnType("int");

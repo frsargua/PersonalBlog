@@ -9,7 +9,6 @@ namespace PersonalBlog.Data.Services
     public interface IPostService : IEntityBaseRepository<Post>
     {
         public Task AddNewPostAsync(Post data);
-        public Task<IEnumerable<Post>> GetAllByIdAsync(int id);
         public Task<IEnumerable<Post>> GetAllByUserId(string userId);
         public Task<IEnumerable<Post>> GetAllByCategory(int categoryId);
 

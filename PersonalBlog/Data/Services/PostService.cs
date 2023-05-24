@@ -20,8 +20,6 @@ namespace PersonalBlog.Data.Services
 
         public async Task AddNewPostAsync(Post data)
         {
-
-
             if (_context != null)
             {
                 await _context.Posts.AddAsync(data);
@@ -31,18 +29,6 @@ namespace PersonalBlog.Data.Services
             {
                 throw new NullReferenceException("_context object is null");
             }
-
-        }
-
-        public async Task<IEnumerable<Post>> GetAllByIdAsync(int id)
-        {
-            //var result = await _context.Posts.Where(n=>n.Id==id);
-
-                        
-
-            var result =  _context.Posts.Where(n => n.AppUserId == id.ToString());
-
-            return result;
         }
 
         public async Task<IEnumerable<Post>> GetAllByUserId(string userId)

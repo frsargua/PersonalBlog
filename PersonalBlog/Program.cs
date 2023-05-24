@@ -14,6 +14,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IFirebaseService, FirebaseService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

@@ -177,6 +177,7 @@ namespace PersonalBlog.Migrations
                     DateCreated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     PostTitle = table.Column<string>(type: "longtext", nullable: false),
                     PostText = table.Column<string>(type: "longtext", nullable: false),
+                    ImageUrl = table.Column<string>(type: "longtext", nullable: false),
                     PostCategory = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<string>(type: "varchar(255)", nullable: false)
                 },

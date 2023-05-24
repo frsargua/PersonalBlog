@@ -52,21 +52,17 @@ namespace PersonalBlog.Data.Base
             return result;
         }
 
-        public async Task<T> GetByIdAsync(int id, int skip, int take, params Expression<Func<T, object>>[] includeProperties)
-        {
+        //public async Task<T> GetByIdAsync(int id, int skip, int take, params Expression<Func<T, object>>[] includeProperties)
+        //{
 
-            var query = _context.Set<T>().Where(o => o.Id == id);
-            query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-            var result = await query.FirstOrDefaultAsync();
+        //    var query = _context.Set<T>().Where(o => o.Id == id);
+        //    query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        //    var result = await query.FirstOrDefaultAsync();
 
-            //if (result != null)
-            //{
-            //    // Sort comments by date (or any other criteria if needed)
-            //    result.Comments = result.Comments.OrderBy(c => c.Date).Skip(skip).Take(take).ToList();
-            //}
+        //    return result;
+        //}
 
-            return result;
-        }
+
 
 
         public async Task UpdateAsync(int id, T newEntity)

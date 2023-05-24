@@ -48,31 +48,30 @@ namespace PersonalBlog.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> SinglePost(int id, int? page)
+        public async Task<IActionResult> SinglePost(int id, int? page =1 )
         {
-            int pageNumber = page ?? 1;
+            int pageNumber = page.HasValue ? page.Value : 1;
 
-            int totalCommentCount = _serviceComments.GetCommentCountForPost(id);
+            var userId = _userManager.GetUserId(User);
+
+            int totalCommentCount = _serviceComments.GetCommentCountForPost(userId);
 
             int totalPages = (int)Math.Ceiling((double)totalCommentCount / PageSize);
 
             pageNumber = pageNumber < 1 ? 1 : pageNumber;
             pageNumber = pageNumber > totalPages ? totalPages : pageNumber;
 
-            int skip = (pageNumber - 1) * PageSize;
+            int skip = (pageNumber-1) * PageSize;
 
 
             var singlePost = await _service.GetByIdAsync(id,skip,PageSize, o => o.Comment);
 
-            var combinedViewModel = new SinglePostLoggedIn
-            {
-                post = singlePost,
-            };
-
             ViewBag.UserId = _userManager.GetUserId(User);
+            TempData["CommentsPageNumber"] = page;
+            TempData["totalPages"] = totalPages;
 
 
-            return View(combinedViewModel);
+            return View(singlePost);
         }
 
         // GET: /<controller>/

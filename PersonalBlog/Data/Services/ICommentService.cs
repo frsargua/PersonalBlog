@@ -8,7 +8,7 @@ namespace PersonalBlog.Data.Services
 	public interface ICommentService : IEntityBaseRepository<Comment>
     {
         public Task AddNewCommentAsync(Comment newComment);
-        public int GetCommentCountForPost(int id);
+        public int GetCommentCountForPost(string id);
 
     }
 }

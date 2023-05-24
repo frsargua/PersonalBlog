@@ -45,6 +45,35 @@ namespace PersonalBlog.Data.Services
             return result;
         }
 
+        public async Task<SinglePostLoggedIn> GetByIdAsync(int id, int skip, int take, params Expression<Func<Post, object>>[] includeProperties)
+        {
+
+            //var query = _context.Posts.Where(o => o.Id == id);
+            //query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(c => c.AppUser).Include(c => c.Comment).ThenInclude(pc => pc.AppUser));
+            //query = query.Skip(skip).Take(take);
+            //var result = await query.FirstOrDefaultAsync();
+
+            var post = await _context.Posts
+             .Where(p => p.Id == id)
+             .Include(p => p.AppUser)
+             .FirstOrDefaultAsync();
+
+            var comments = await _context.Comments
+            .Where(c => c.PostId == id)
+            .Include(c => c.AppUser)
+            .OrderByDescending(c => c.DateCreated)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+
+            var result = new SinglePostLoggedIn
+            {
+                post = post,
+                Comments = comments
+            };
+
+            return result;
+        }
     }
 }
 

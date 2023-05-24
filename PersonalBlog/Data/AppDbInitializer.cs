@@ -31,7 +31,7 @@ namespace PersonalBlog.Data
                     var newAdminUser = new AppUser()
                     {
                         FullName = "Admin User",
-                        UserName = "admin-user",
+                        UserName = "admin",
                         Email = adminUserEmail,
                         EmailConfirmed = true
                     };
@@ -48,7 +48,7 @@ namespace PersonalBlog.Data
                     var newAppUser = new AppUser()
                     {
                         FullName = "Application User",
-                        UserName = "app-user",
+                        UserName = "user",
                         Email = appUserEmail,
                         EmailConfirmed = true
                     };

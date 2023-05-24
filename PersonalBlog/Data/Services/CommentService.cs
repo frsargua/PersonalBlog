@@ -23,10 +23,12 @@ namespace PersonalBlog.Data.Services
         }
 
 
-        public int GetCommentCountForPost(int id)
+        public int GetCommentCountForPost(string id)
         {
 
-            return _context.Comments.Where(n=> n.AppUserId==id.ToString()).Count();
+            var count = _context.Comments.Where(n=> n.AppUserId==id).Count();
+
+            return count;
         }
     }
 }

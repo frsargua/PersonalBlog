@@ -8,7 +8,7 @@ namespace PersonalBlog.Data.Base
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> GetAll(params Expression<Func<T, Object>>[] includeProperties);
         Task<T> GetByIdAsync(int id);
-        Task<T> GetByIdAsync(int id, int skip, int take, params Expression<Func<T, object>>[] includeProperties);
+        //Task<T> GetByIdAsync(int id, int skip, int take, params Expression<Func<T, object>>[] includeProperties);
         void Add(T entity);
         Task DeleteAsync(int id);
         Task AddAsync(T entity);

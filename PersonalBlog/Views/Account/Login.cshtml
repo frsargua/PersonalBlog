@@ -5,37 +5,36 @@
     ViewData["Title"] = "Log in to your account";
 }
 
-<div class="row">
-    <div class="col-md-6 offset-3">
-        <p>
-            <h4>Loging to your account</h4>
-        </p>
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">Login to your account</h4>
+                    <form asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="row">
-            <div class="col-md-8 offset-2">
-                <form asp-action="Login">
-                    <div asp-validation-summary="ModelOnly" class="text-danger">
+                        <div class="form-group">
+                            <label asp-for="EmailAddres" class="control-label"></label>
+                            <input asp-for="EmailAddres" class="form-control" />
+                            <span asp-validation-for="EmailAddres" class="text-danger"></span>
+                        </div>
 
-                    </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label asp-for="EmailAddres" class="control-label"></label>
-                        <input asp-for="EmailAddres" class="form-control" />
-                        <span asp-validation-for="EmailAddres" class="text-danger"></span>
-                    </div>
 
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Log in" />
-                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
-                    </div>
-                </form>
+                        <div class="form-group mt-3 text-center">
+                                <input class="btn btn-outline-success float-right" type="submit" value="Log in" />
+                                <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+

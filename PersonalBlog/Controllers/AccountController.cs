@@ -114,6 +114,11 @@ namespace PersonalBlog.Controllers
             {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
             }
+            else
+            {
+                TempData["Error"] = "Weak password";
+                return View(registerVM);
+            }
 
             return View("RegistrationCompleted");
         }

@@ -5,7 +5,7 @@ namespace PersonalBlog.Data
 	{
         Hobbies,
 		Coding,
-		DayToDay,
+		Daily,
 		Others,
     }
 }

@@ -7,17 +7,50 @@
 }
 
 
-<div class="col-12 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center align-items-center my-4">
+@*<div class="container my-4">
+        <div class="row justify-content-center align-items-center">
 
-    @foreach (int i in Enum.GetValues(typeof(PostCategory)))
-    {
-        <div class="card col-4">
-            <a asp-controller="Post" asp-action="PostsByCategory" asp-route-id="@i" class="btn btn-success col-12 m-auto text-decoration-none text-white">
-                <div class="card-body bg-success bg-opacity-25">
-                    <p>@Enum.GetName(typeof(PostCategory), i)</p>
+            @foreach (int i in Enum.GetValues(typeof(PostCategory)))
+            {
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <a class="btn btn-success col-12 text-decoration-none text-white"
+                           asp-controller="Post" asp-action="PostsByCategory" asp-route-id="@i">
+                            <div class="card-body bg-success bg-opacity-25">
+                                <p class="card-text text-center">@Enum.GetName(typeof(PostCategory), i)</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </a>
-        </div>
-    }
+            }
 
+        </div>
+    </div>*@
+
+
+<div class="container my-4">
+    <div class="row justify-content-center align-items-center">
+
+        @foreach (int i in Enum.GetValues(typeof(PostCategory)))
+        {
+            string randomImage = $"https://source.unsplash.com/random/400x250?{@Enum.GetName(typeof(PostCategory), i)}";
+
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="card bg-dark text-white">
+                    <img src="@randomImage" class="card-img" style="max-height: 300px; object-fit: cover;">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body bg-dark-overlay">
+                            <h4 class="card-title text-white">@Enum.GetName(typeof(PostCategory), i)</h4>
+                        </div>
+                        <a class="btn btn-primary stretched-link"
+                           asp-controller="Post" asp-action="PostsByCategory" asp-route-id="@i">
+                            View Posts
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
 </div>
+

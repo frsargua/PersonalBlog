@@ -61,7 +61,12 @@ namespace PersonalBlog.Controllers
             pageNumber = pageNumber < 1 ? 1 : pageNumber;
             pageNumber = pageNumber > totalPages ? totalPages : pageNumber;
 
-            int skip = (pageNumber-1) * PageSize;
+            int skip =0;
+
+            if (page > 1)
+            {
+                skip = (pageNumber - 1) * PageSize;
+            }
 
 
             var singlePost = await _service.GetByIdAsync(id,skip,PageSize, o => o.Comment);

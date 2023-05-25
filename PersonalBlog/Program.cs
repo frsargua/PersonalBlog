@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 Environment.SetEnvironmentVariable(
-         "GOOGLE_APPLICATION_CREDENTIALS", "./firebase_credentials.json");
+         "GOOGLE_APPLICATION_CREDENTIALS", "./Data/firebase_credentials.json");
 
 var credential = await GoogleCredential.GetApplicationDefaultAsync();
 

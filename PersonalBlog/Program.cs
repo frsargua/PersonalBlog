@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,11 +11,22 @@ using PersonalBlog.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//var credential = GoogleCredential.FromFile("./firebase_credentials.json");
+
+var credential = await GoogleCredential.GetApplicationDefaultAsync();
 
 builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromJson(builder.Configuration.GetValue<string>("GOOGLE_APPLICATION_CREDENTIALS"))
-}));
+    //await GoogleCredential.FromJson(builder.Configuration.GetValue<string>("GOOGLE_APPLICATION_CREDENTIALS"))
+    Credential = credential
+}));;
+
+//var strg = FirebaseApp.Create(new AppOptions()
+//{
+//    Credential = GoogleCredential.FromJson(builder.Configuration.GetValue<string>("GOOGLE_APPLICATION_CREDENTIALS"))
+//});
+
+Console.WriteLine("Hello");
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -23,7 +35,7 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IFirebaseService, FirebaseService>();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
 
 
 //Authentication and authorization

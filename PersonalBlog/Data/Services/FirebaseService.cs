@@ -12,15 +12,8 @@ namespace PersonalBlog.Data.Services
 {
     public class FirebaseService : IFirebaseService
     {
-        private readonly string _apiKey;
-        private readonly string _bucketName;
-        private readonly string _projectId;
-
         public FirebaseService(IConfiguration configuration)
         {
-            _apiKey = configuration["FirebaseConfig:ApiKey"];
-            _bucketName = configuration["FirebaseConfig:StorageBucket"];
-            _projectId = configuration["FirebaseConfig:projectId"];
         }
 
         public async Task<string> UploadImageAsync(IFormFile imageFile)

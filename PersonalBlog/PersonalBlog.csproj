@@ -57,5 +57,8 @@
     <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="Data\firebase_credentials.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="Data\key.json">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 </Project>

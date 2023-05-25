@@ -13,18 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 //var credential = GoogleCredential.FromFile("./firebase_credentials.json");
 
+Environment.SetEnvironmentVariable(
+         "GOOGLE_APPLICATION_CREDENTIALS", "./firebase_credentials.json");
+
 var credential = await GoogleCredential.GetApplicationDefaultAsync();
 
 builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
 {
-    //await GoogleCredential.FromJson(builder.Configuration.GetValue<string>("GOOGLE_APPLICATION_CREDENTIALS"))
     Credential = credential
 }));;
-
-//var strg = FirebaseApp.Create(new AppOptions()
-//{
-//    Credential = GoogleCredential.FromJson(builder.Configuration.GetValue<string>("GOOGLE_APPLICATION_CREDENTIALS"))
-//});
 
 Console.WriteLine("Hello");
 

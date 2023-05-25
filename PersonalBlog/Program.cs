@@ -18,9 +18,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 Environment.SetEnvironmentVariable(
-         "GOOGLE_APPLICATION_CREDENTIALS", "./key.json");
+         "GOOGLE_APPLICATION_CREDENTIALS", "key.json");
 
 var credential = await GoogleCredential.GetApplicationDefaultAsync();
+
+//var credential = await GoogleCredential.("");
 
 
 builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()

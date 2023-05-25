@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 Environment.SetEnvironmentVariable(
-         "GOOGLE_APPLICATION_CREDENTIALS", "key.json");
+         "GOOGLE_APPLICATION_CREDENTIALS", $"{Directory.GetCurrentDirectory()}/key.json");
 
 var credential = await GoogleCredential.GetApplicationDefaultAsync();
 
@@ -30,7 +30,7 @@ builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
     Credential = credential
 })); 
 
-Console.WriteLine("Hello");
+Console.WriteLine($"{Directory.GetCurrentDirectory()}/key.json");
 
 // Add services to the container.
 builder.Services.AddRazorPages();

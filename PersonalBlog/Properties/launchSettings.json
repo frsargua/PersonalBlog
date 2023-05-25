@@ -13,8 +13,7 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5263",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "GOOGLE_APPLICATION_CREDENTIALS": "./firebase_credentials.json"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "dotnetRunMessages": true
     },
@@ -23,8 +22,7 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7285;http://localhost:5263",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "GOOGLE_APPLICATION_CREDENTIALS": "./firebase_credentials.json"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "dotnetRunMessages": true
     },
@@ -32,8 +30,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "GOOGLE_APPLICATION_CREDENTIALS": "./firebase_credentials.json"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }

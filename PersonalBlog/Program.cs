@@ -11,11 +11,10 @@ using PersonalBlog.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 
-var defaultApp = FirebaseApp.Create(new AppOptions()
+builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "firebase_credentials.json")),
-});
-Console.WriteLine(defaultApp.Name); // "[DEFAULT]"
+    Credential = GoogleCredential.FromJson(builder.Configuration.GetValue<string>("GOOGLE_APPLICATION_CREDENTIALS"))
+}));
 
 // Add services to the container.
 builder.Services.AddRazorPages();

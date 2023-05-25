@@ -38,6 +38,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
     <PackageReference Include="Google.Cloud.Storage.V1" Version="4.5.0" />
+    <PackageReference Include="FirebaseAdmin" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Views\Home\txt">
@@ -52,7 +53,7 @@
     <Content Update="Properties\credentials.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
-    <Content Update="Properties\firebase_credentials.json">
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="firebase_credentials.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
   </ItemGroup>

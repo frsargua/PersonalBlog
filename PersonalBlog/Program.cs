@@ -1,4 +1,6 @@
 ﻿using System;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +9,12 @@ using PersonalBlog.Data.Services;
 using PersonalBlog.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile("firebase_credentials.json"),
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();

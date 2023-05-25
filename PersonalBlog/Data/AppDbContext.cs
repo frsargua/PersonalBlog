@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PersonalBlog.Models;
 using System.Numerics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Google.Apis.Auth.OAuth2;
+using FirebaseAdmin;
 
 namespace PersonalBlog.Data
 {
@@ -25,6 +27,7 @@ namespace PersonalBlog.Data
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseMySQL(connectionString);
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

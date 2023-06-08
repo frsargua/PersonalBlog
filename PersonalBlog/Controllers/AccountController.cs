@@ -42,9 +42,12 @@ namespace PersonalBlog.Controllers
 
 
         // GET: /<controller
-        public async Task<IActionResult> Dashboard(string id)
+        public async Task<IActionResult> Dashboard(string id, int page = 1)
         {
-            var posts = await _service.GetAllByUserId(id);
+            var posts = await _service.GetAllByUserId(id, page);
+            var userId = _userManager.GetUserId(User);
+            TempData["Id"] = userId;
+
             return View(posts);
         }
 

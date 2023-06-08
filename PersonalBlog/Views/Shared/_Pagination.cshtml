@@ -1,0 +1,29 @@
+﻿@using PersonalBlog.Data.ViewModels;
+@model PageWithPagination<Post>
+
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" asp-controller="@Model.Controller" asp-action="@Model.ActionName" asp-route-id="@TempData["Id"]" asp-route-page="@(Model.CurrentPage-1)">Previous</a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                @if (Model.CurrentPage == i)
+                {
+                    <span class="page-link">
+                        @i
+                        <span class="sr-only">(current)</span>
+                    </span>
+                }
+                else
+                {
+                    <a class="page-link" asp-controller="@Model.Controller" asp-action="@Model.ActionName" asp-route-id="@TempData["Id"]" asp-route-page="@i">@i</a>
+                }
+            </li>
+        }
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" asp-controller="@Model.Controller" asp-action="@Model.ActionName" asp-route-id="@TempData["Id"]" asp-route-page="@(Model.CurrentPage+1)">Next</a>
+        </li>
+    </ul>
+</nav>

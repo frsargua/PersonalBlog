@@ -1,11 +1,12 @@
 ﻿@*Define model*@
-@model IEnumerable<Post>
+@using PersonalBlog.Data.ViewModels;
+@model PageWithPagination<Post>
 @*Define ViewData*@
 @{
     ViewData["Title"] = "List of Posts";
 }
 
-@foreach (var item in Model)
+@foreach (var item in Model.List)
 {
     <div class="col-11 col-md-8 col-lg-8 mx-auto d-flex flex-column justify-content-center my-5">
         <small class="text-muted">@item.AppUser.FullName on the @item.DateCreated</small>
@@ -36,3 +37,6 @@
 
 
 }
+
+@await Html.PartialAsync("_Pagination", Model)
+

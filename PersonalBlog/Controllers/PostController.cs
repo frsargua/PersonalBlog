@@ -76,15 +76,19 @@ namespace PersonalBlog.Controllers
             TempData["totalPages"] = totalPages;
 
 
+
             return View(singlePost);
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> PostsByCategory(int id)
+        public async Task<IActionResult> PostsByCategory(int id, int page=1)
         {
-            var allPosts = await _service.GetAllByCategory(id);
 
-            return View(allPosts);
+            var reponse = await _service.GetAllByCategory(id,page);
+
+            TempData["Id"] = id;
+
+            return View(reponse);
         }
 
         // GET: /<controller>/

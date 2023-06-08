@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using PersonalBlog.Data.Base;
 using PersonalBlog.Data.ViewModels;
 using PersonalBlog.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PersonalBlog.Data.Services
 {
@@ -17,7 +16,7 @@ namespace PersonalBlog.Data.Services
 
         public PostService(AppDbContext context) : base(context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task AddNewPostAsync(Post data)
@@ -35,65 +34,65 @@ namespace PersonalBlog.Data.Services
 
         public async Task<PageWithPagination<Post>> GetAllByUserId(string userId, int pageNumber)
         {
+            var query = _context.Posts.Where(n => n.AppUserId == userId).Include(n => n.AppUser);
 
-            var query = _context.Posts.Where(n => n.AppUserId == userId).Include(n=>n.AppUser);
-
-            int totalItems = query.Count();
+            int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-            var result = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            var result = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            var newPageData = new PageWithPagination<Post>();
-            newPageData.CurrentPage = pageNumber;
-            newPageData.List = result;
-            newPageData.TotalPages = totalPages;
-            newPageData.ActionName = "Dashboard";
-            newPageData.Controller = "Account";
+            var newPageData = new PageWithPagination<Post>
+            {
+                CurrentPage = pageNumber,
+                List = result,
+                TotalPages = totalPages,
+                ActionName = "Dashboard",
+                Controller = "Account"
+            };
 
             return newPageData;
         }
 
         public async Task<PageWithPagination<Post>> GetAllByCategory(int categoryId, int pageNumber)
         {
-
             var query = _context.Posts.Where(n => (int)n.PostCategory == categoryId).Include(n => n.AppUser);
 
-            int totalItems = query.Count();
+            int totalItems = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-            var result = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            var result = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            var newPageData = new PageWithPagination<Post>();
-            newPageData.ActionName = "PostsByCategory";
-            newPageData.Controller = "Post";
-            newPageData.CurrentPage = pageNumber;
-            newPageData.List = result;
-            newPageData.TotalPages = totalPages;
-
+            var newPageData = new PageWithPagination<Post>
+            {
+                ActionName = "PostsByCategory",
+                Controller = "Post",
+                CurrentPage = pageNumber,
+                List = result,
+                TotalPages = totalPages
+            };
 
             return newPageData;
         }
 
         public async Task<SinglePostLoggedIn> GetByIdAsync(int id, int skip, int take, params Expression<Func<Post, object>>[] includeProperties)
         {
-
-            //var query = _context.Posts.Where(o => o.Id == id);
-            //query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(c => c.AppUser).Include(c => c.Comment).ThenInclude(pc => pc.AppUser));
-            //query = query.Skip(skip).Take(take);
-            //var result = await query.FirstOrDefaultAsync();
-
             var post = await _context.Posts
-             .Where(p => p.Id == id)
-             .Include(p => p.AppUser)
-             .FirstOrDefaultAsync();
+                .Where(p => p.Id == id)
+                .Include(p => p.AppUser)
+                .FirstOrDefaultAsync();
+
+            if (post == null)
+            {
+                throw new ArgumentException("Post not found.");
+            }
 
             var comments = await _context.Comments
-            .Where(c => c.PostId == id)
-            .Include(c => c.AppUser)
-            .OrderByDescending(c => c.DateCreated)
-            .Skip(skip)
-            .Take(take)
-            .ToListAsync();
+                .Where(c => c.PostId == id)
+                .Include(c => c.AppUser)
+                .OrderByDescending(c => c.DateCreated)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
 
             var result = new SinglePostLoggedIn
             {
@@ -105,4 +104,3 @@ namespace PersonalBlog.Data.Services
         }
     }
 }
-

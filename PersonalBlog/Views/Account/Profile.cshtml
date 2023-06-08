@@ -1,0 +1,80 @@
+﻿@using PersonalBlog.Data.ViewModels;
+@model UpdateUserVM
+
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center py-4">User Details</h1>
+<hr />
+
+<div class="container">
+    <div class="card rounded">
+        <div class="card-body">
+            <form asp-action="Edit" asp-controller="Account" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row align-items-md-center">
+
+                    <div class="col-md-3 text-center">
+                        <div class="profile-image-container mb-4">
+                            <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="Profile Image" class="profile-image img-fluid rounded-circle" style="max-width: 100px;">
+                        </div>
+                        <h5 class="card-title">@Model.User.FullName</h5>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label asp-for="Email" for="email">Email:</label>
+                            <input asp-for="Email" type="email" id="email" class="form-control" value="@Model.User.Email" readonly>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserName" for="username">Username:</label>
+                            <input asp-for="UserName" type="text" id="username" class="form-control" value="@Model.User.UserName" readonly>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="posts">Number of Posts:</label>
+                            <input type="number" id="posts" class="form-control" value="@Model.User.Posts.Count()" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-md-right text-center mt-4">
+                    <button id="editBtn" type="button" class="btn btn-primary btn-lg">Edit</button>
+                    <button id="saveBtn" type="submit" class="btn btn-success btn-lg d-none">Save</button>
+                    <button id="cancelBtn" type="button" class="btn btn-secondary btn-lg d-none">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>$(document).ready(function () {
+            $("#editBtn").click(function () {
+                toggleEditMode(true);
+            });
+
+            $("#cancelBtn").click(function () {
+                toggleEditMode(false);
+            });
+
+            $("#saveBtn").click(function () {
+                // Perform save action here
+                toggleEditMode(false);
+            });
+
+            function toggleEditMode(editMode) {
+                if (editMode) {
+                    $("input").removeAttr("readonly");
+                    $("#editBtn").addClass("d-none");
+                    $("#saveBtn, #cancelBtn").removeClass("d-none");
+                } else {
+                    $("input").attr("readonly", "readonly");
+                    $("#editBtn").removeClass("d-none");
+                    $("#saveBtn, #cancelBtn").addClass("d-none");
+                }
+            }
+        });</script>
+}

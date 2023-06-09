@@ -63,7 +63,7 @@ namespace PersonalBlog.Controllers
                 return RedirectToAction("Login");
             }
 
-            user.UserName = await _firebaseService.UploadImageAsync(model.ImageUrl);
+            user.ImageUrl = await _firebaseService.UploadImageAsync(model.ImageUrl);
 
             IdentityResult result = await _userManager.UpdateAsync(user);
 

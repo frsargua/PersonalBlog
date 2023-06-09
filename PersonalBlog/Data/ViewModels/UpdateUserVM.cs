@@ -7,6 +7,7 @@ namespace PersonalBlog.Data.ViewModels
 	{
         public string Email { get; set; }
         public string UserName { get; set; }
+        public IFormFile? ImageUrl { get; set; }
         public AppUser? User { get; set; }
 
     }

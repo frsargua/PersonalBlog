@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using PersonalBlog.Data;
 using PersonalBlog.Data.Services;
 using PersonalBlog.Data.ViewModels;
@@ -11,17 +12,19 @@ namespace PersonalBlog.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IFirebaseService _firebaseService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IPostService _service;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly AppDbContext _context;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AppDbContext context, IPostService service)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AppDbContext context, IPostService service, IFirebaseService firebaseService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _service = service;
+            _firebaseService = firebaseService;
         }
 
         public IActionResult Login()
@@ -45,6 +48,33 @@ namespace PersonalBlog.Controllers
 
             var profileData = new UpdateUserVM { User = user };
             return View(profileData);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAvatar(UpdateUserVM model)
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                TempData["Error"] = "User not found.";
+                return RedirectToAction("Login");
+            }
+
+            user.UserName = await _firebaseService.UploadImageAsync(model.ImageUrl);
+
+            IdentityResult result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                TempData["Error"] = "Failed to update user.";
+                return RedirectToAction("Profile");
+            }
+
+            TempData["Success"] = "Profile updated successfully.";
+            return RedirectToAction("Profile");
         }
 
         [HttpPost]

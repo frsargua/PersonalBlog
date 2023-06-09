@@ -6,24 +6,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .profile-image-container {
+        position: relative;
+    }
+
+    .edit-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .profile-image-container:hover .edit-button {
+        opacity: 1;
+    }
+</style>
+
 <h1 class="text-center py-4">User Details</h1>
 <hr />
 
 <div class="container">
     <div class="card rounded">
         <div class="card-body">
-            <form asp-action="Edit" asp-controller="Account" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row align-items-md-center">
+                <div class="col-md-3 text-center">
+                    <form asp-action="EditAvatar" enctype="multipart/form-data" class="profile-image-container mb-4">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="row align-items-md-center">
-
-                    <div class="col-md-3 text-center">
-                        <div class="profile-image-container mb-4">
+                        <div class="image-upload">
+                            <label asp-for="ImageUrl" for="profile-image">Image</label>
                             <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="Profile Image" class="profile-image img-fluid rounded-circle" style="max-width: 100px;">
+                            <div class="edit-button">
+                                <button type="button" class="btn btn-primary">Edit</button>
+                            </div>
+                            <input asp-for="ImageUrl" id="profile-image" class="form-control" accept="image/*" style="display: none;">
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+
+                            <button id="saveBtn" type="submit" class="btn btn-success btn-lg d-none">Save</button>
                         </div>
-                        <h5 class="card-title">@Model.User.FullName</h5>
-                    </div>
-                    <div class="col-md-8">
+                    </form>
+                    <h5 class="card-title">@Model.User.FullName</h5>
+                </div>
+                <div class="col-md-8">
+                    <form asp-action="Edit" asp-controller="Account" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Email" for="email">Email:</label>
                             <input asp-for="Email" type="email" id="email" class="form-control" value="@Model.User.Email" readonly>
@@ -38,14 +67,15 @@
                             <label for="posts">Number of Posts:</label>
                             <input type="number" id="posts" class="form-control" value="@Model.User.Posts.Count()" disabled>
                         </div>
-                    </div>
+
+                        <div class="text-md-right text-center mt-4">
+                            <button id="editBtn" type="button" class="btn btn-primary btn-lg">Edit</button>
+                            <button id="saveBtn" type="submit" class="btn btn-success btn-lg d-none">Save</button>
+                            <button id="cancelBtn" type="button" class="btn btn-secondary btn-lg d-none">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="text-md-right text-center mt-4">
-                    <button id="editBtn" type="button" class="btn btn-primary btn-lg">Edit</button>
-                    <button id="saveBtn" type="submit" class="btn btn-success btn-lg d-none">Save</button>
-                    <button id="cancelBtn" type="button" class="btn btn-secondary btn-lg d-none">Cancel</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

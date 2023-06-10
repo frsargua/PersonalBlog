@@ -38,7 +38,7 @@
 
                         <div class="image-upload">
                             <label asp-for="ImageUrl" for="profile-image">Image</label>
-                            <img src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png" alt="Profile Image" class="profile-image img-fluid rounded-circle" style="max-width: 100px;">
+                            <img src="@Model.User.ImageUrl" alt="Profile Image" class="profile-image img-fluid rounded-circle" style="max-width: 100px;">
                             <div class="edit-button">
                                 <button type="button" class="btn btn-primary">Edit</button>
                             </div>

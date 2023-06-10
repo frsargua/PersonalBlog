@@ -21,14 +21,14 @@ namespace PersonalBlog.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
                     Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "varchar(191)", maxLength: 191, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 })
-                .Annotation("MySQL:Charset", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4").Annotation("MySQL:Collation", "utf8mb4_unicode_ci"); ;
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -36,10 +36,11 @@ namespace PersonalBlog.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
                     FullName = table.Column<string>(type: "longtext", nullable: false),
+                    ImageUrl = table.Column<string>(type: "longtext", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "varchar(191)", maxLength: 191, nullable: true),
+                    Email = table.Column<string>(type: "varchar(191)", maxLength: 191, nullable: true), // Reduce length to fit within the limit
+                    NormalizedEmail = table.Column<string>(type: "varchar(191)", maxLength: 191, nullable: true), // Reduce length to fit within the limit
                     EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: true),
                     SecurityStamp = table.Column<string>(type: "longtext", nullable: true),
@@ -54,8 +55,9 @@ namespace PersonalBlog.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.UniqueConstraint("AK_AspNetUsers_NormalizedUserName", x => x.NormalizedUserName);
                 })
-                .Annotation("MySQL:Charset", "utf8mb4");
+                .Annotation("MySQL:Charset", "utf8mb4").Annotation("MySQL:Collation", "utf8mb4_unicode_ci") ;
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",

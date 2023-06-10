@@ -32,6 +32,7 @@ namespace PersonalBlog.Data
                     {
                         FullName = "Admin User",
                         UserName = "admin",
+                        ImageUrl = "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
                         Email = adminUserEmail,
                         EmailConfirmed = true
                     };
@@ -49,6 +50,7 @@ namespace PersonalBlog.Data
                     {
                         FullName = "Application User",
                         UserName = "user",
+                        ImageUrl = "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
                         Email = appUserEmail,
                         EmailConfirmed = true
                     };

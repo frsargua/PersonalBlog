@@ -11,7 +11,7 @@ using PersonalBlog.Data;
 namespace PersonalBlog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230523141841_models")]
+    [Migration("20230609225930_models")]
     partial class models
     {
         /// <inheritdoc />
@@ -170,6 +170,10 @@ namespace PersonalBlog.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("longtext");
 
